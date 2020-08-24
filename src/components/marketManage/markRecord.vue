@@ -123,7 +123,8 @@
         </el-form-item>
         <el-form-item label="客户拜访报告书：" prop="cReport">
           <el-upload
-            ref="cReportRef"
+            :on-remove="removeCReport"
+            ref="addCReportRef"
             action="#"
             :limit="1"
             :http-request="getCReportFile">
@@ -132,7 +133,8 @@
         </el-form-item>
         <el-form-item label="客户推荐表：" prop="cTestimonials">
           <el-upload
-            ref="cTestimonialsRef"
+            :on-remove="removeCTestimonials"
+            ref="addCTestimonialsRef"
             action="#"
             :limit="1"
             :http-request="getCTestimonialsFile">
@@ -141,7 +143,8 @@
         </el-form-item>
         <el-form-item label="客户综合评价：" prop="cEvaluation">
           <el-upload
-            ref="cEvaluationRef"
+            :on-remove="removeCEvaluation"
+            ref="addCEvaluationRef"
             action="#"
             :limit="1"
             :http-request="getCEvaluationFile">
@@ -189,7 +192,8 @@
         </el-form-item>
         <el-form-item label="客户拜访报告书：" prop="cReport">
           <el-upload
-            ref="cReportRef"
+            :on-remove="removeCReport"
+            ref="editCReportRef"
             action="#"
             :limit="1"
             :http-request="getCReportFile">
@@ -198,7 +202,8 @@
         </el-form-item>
         <el-form-item label="客户推荐表：" prop="cTestimonials">
           <el-upload
-            ref="cTestimonialsRef"
+            :on-remove="removeCTestimonials"
+            ref="editCTestimonialsRef"
             action="#"
             :limit="1"
             :http-request="getCTestimonialsFile">
@@ -207,7 +212,8 @@
         </el-form-item>
         <el-form-item label="客户综合评价：" prop="cEvaluation">
           <el-upload
-            ref="cEvaluationRef"
+            :on-remove="removeCEvaluation"
+            ref="editCEvaluationRef"
             action="#"
             :limit="1"
             :http-request="getCEvaluationFile">
@@ -354,17 +360,17 @@
       // 监听添加营销记录对话框的关闭事件
       addDialogClosed() {
         this.$refs.addFormRef.resetFields()
-        this.$refs.cReportRef.clearFiles()
-        this.$refs.cTestimonialsRef.clearFiles()
-        this.$refs.cEvaluationRef.clearFiles()
+        this.$refs.addCReportRef.clearFiles()
+        this.$refs.addCTestimonialsRef.clearFiles()
+        this.$refs.addCEvaluationRef.clearFiles()
         Object.assign(this.$data.addForm, this.$options.data().addForm)
       },
       // 监听修改营销记录对话框的关闭事件
       editDialogClosed() {
         this.$refs.editFormRef.resetFields()
-        this.$refs.cReportRef.clearFiles()
-        this.$refs.cTestimonialsRef.clearFiles()
-        this.$refs.cEvaluationRef.clearFiles()
+        this.$refs.editCReportRef.clearFiles()
+        this.$refs.editCTestimonialsRef.clearFiles()
+        this.$refs.editCEvaluationRef.clearFiles()
         Object.assign(this.$data.editForm, this.$options.data().editForm)
       },
       // 点击按钮，添加新营销记录
@@ -527,6 +533,19 @@
       bindCId(id) {
         this.addForm.cId = id
       },
+      removeCReport() {
+        this.addForm.cReport = ''
+        this.editForm.cReport = ''
+      },
+      removeCTestimonials() {
+        this.addForm.cTestimonials = ''
+        this.editForm.cTestimonials = ''
+      },
+      removeCEvaluation() {
+        this.addForm.cEvaluation = ''
+        this.editForm.cEvaluation = ''
+      },
+
     }
   }
 </script>

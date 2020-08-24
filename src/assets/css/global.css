@@ -21,6 +21,8 @@ body,
     margin-top: 15px;
     font-size: 14px;
     font-family: Microsoft YaHei;
+    max-height: 450px;
+    overflow: auto;
 }
 
 .el-pagination {

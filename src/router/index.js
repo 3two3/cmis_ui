@@ -9,6 +9,10 @@ import Cminfo from '../components/cminfo/cminfo.vue'
 import MarkRecord from '../components/marketManage/markRecord.vue'
 import Member from '../components/member/member.vue'
 import Cinfo from '../components/marketManage/cinfo.vue'
+import CmRegular from '../components/dailyWorkManagement/cmRegular.vue'
+import WorkManagement from '../components/dailyWorkManagement/workManagement.vue'
+import Report from '../components/report/report.vue'
+import LearnGarden from '../components/learnGarden/learnGarden.vue'
 
 Vue.use(Router)
 
@@ -29,6 +33,10 @@ const router = new Router({
         {path: '/markRecord', component: MarkRecord},
         {path: '/member', component: Member},
         {path: '/cinfo', component: Cinfo},
+        {path: '/cmRegular', component: CmRegular},
+        {path: '/report', component: Report},
+        {path: '/learnGarden', component: LearnGarden},
+        {path: '/workManagement', component: WorkManagement},
       ]
     }
   ]
