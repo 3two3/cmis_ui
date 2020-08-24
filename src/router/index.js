@@ -6,6 +6,9 @@ import Welcome from '../components/Welcome.vue'
 import MenuManage from '../components/menuManage/menuManage.vue'
 import Dict from '../components/dictionary/dict.vue'
 import Cminfo from '../components/cminfo/cminfo.vue'
+import MarkRecord from '../components/marketManage/markRecord.vue'
+import Member from '../components/member/member.vue'
+import Cinfo from '../components/marketManage/cinfo.vue'
 
 Vue.use(Router)
 
@@ -23,6 +26,9 @@ const router = new Router({
         {path: '/menuManage', component: MenuManage},
         {path: '/dict', component: Dict},
         {path: '/cminfo', component: Cminfo},
+        {path: '/markRecord', component: MarkRecord},
+        {path: '/member', component: Member},
+        {path: '/cinfo', component: Cinfo},
       ]
     }
   ]

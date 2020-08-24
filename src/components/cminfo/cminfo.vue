@@ -12,7 +12,7 @@
       <!-- 搜索与添加区域 -->
       <el-row :gutter="5">
         <el-col :span="7">
-          <el-button type="danger" @click="delCms()">批量删除</el-button>
+          <el-button type="danger" @click="delCminfos()">批量删除</el-button>
           <el-button type="primary" @click="addDialogVisible = true">添加客户经理</el-button>
         </el-col>
         <el-col :span="4">
@@ -65,11 +65,11 @@
         <el-table-column label="客户经理编号" prop="cmId" width="120"></el-table-column>
         <el-table-column label="姓名" prop="cmName" width="70"></el-table-column>
         <el-table-column label="性别" prop="cmSex" width="55">
-          <template slot-scope="scope">{{ scope.row.cmSex === '0' ? '男' : '女' }}</template>
+          <template slot-scope="scope">{{ scope.row.cmSex === '1' ? '男' : '女' }}</template>
         </el-table-column>
         <el-table-column label="身份证号" prop="cmSsn"></el-table-column>
-        <el-table-column label="出生日期" prop="cmBirthday"></el-table-column>
-        <el-table-column label="客户经理等级" prop="cmLevel" sortable></el-table-column>
+        <el-table-column label="出生日期" prop="cmBirthday" sortable></el-table-column>
+        <el-table-column label="客户经理等级" prop="cmLevel"></el-table-column>
         <el-table-column label="单位" prop="cmUnit" width="70"></el-table-column>
         <el-table-column label="部门" prop="cmDept"></el-table-column>
         <el-table-column label="操作">
@@ -445,7 +445,6 @@
         }
       }
       return {
-        snp:371302,
         //籍贯
         nativePlace: regionData,
         //籍贯选择后的数组
@@ -926,11 +925,11 @@
           if (idCard.substring(8, 10) < month || idCard.substring(8, 10) == month && idCard.substring(10, 12) <= day) age++;
         }
         if (sex % 2 === 0)
-        //1为女
-          sex = '1';
-        else
-        //0为男
+        //0为女
           sex = '0';
+        else
+        //1为男
+          sex = '1';
         this.addForm.cmSex = sex;
         this.addForm.cmAge = age;
         this.addForm.cmBirthday = birth;
@@ -1000,17 +999,13 @@
       //监听修改客户经理的对话框事件
       async showEditDialog(id) {
         const {data: res} = await this.$http.get('cminfo/get/' + id)
-        console.log(res)
         if (res.status !== 200) {
           return this.$message.error('查询客户经理信息失败！')
         }
-        this.selectNativePlace = res.data.cminfo.cmHometown.split('-')
-        console.log(this.selectNativePlace)
-        //this.selectNativePlace = TextToCode[this.selectNativePlace[0]][this.selectNativePlace[1]][this.selectNativePlace[3]].code
-        //this.selectNativePlace[0]=TextToCode[this.selectNativePlace[0]].code
-        //this.selectNativePlace[1]=TextToCode[this.selectNativePlace[0]][this.selectNativePlace[1]].code
-        //this.selectNativePlace[2]=TextToCode[this.selectNativePlace[0]][this.selectNativePlace[1]][this.selectNativePlace[2]].code
-        //console.log(TextToCode[this.selectNativePlace[0]].code)
+        var hometown = res.data.cminfo.cmHometown.split('-')
+        this.selectNativePlace[0] = TextToCode[hometown[0]].code.toString()
+        this.selectNativePlace[1] = TextToCode[hometown[0]][hometown[1]].code.toString()
+        this.selectNativePlace[2] = TextToCode[hometown[0]][hometown[1]][hometown[2]].code.toString()
         this.technicalTitle = res.data.cminfo.cmProfessionalTitles.split('-')
         this.editForm = res.data.cminfo
         this.editForm.cmStatus = this.editForm.cmStatus == 1 ? true : false
@@ -1089,7 +1084,7 @@
         checkArr.forEach(function (item) {
           params.push(item.cmId);       // 添加所有需要删除数据的id到一个数组，post提交过去
         });
-        console.log(params)
+        //console.log(params)
         const {data: result} = await this.$http.delete('cminfo/delCminfos/' + params)
         if (result.status !== 200) {
           return this.$message.error('删除客户经理失败！')
@@ -1109,7 +1104,7 @@
       },
       //籍贯选择后方法
       nativePlaceHandleChange(value) {
-        console.log(value)
+        console.log(this.selectNativePlace)
         this.addForm.cmHometown = CodeToText[value[0]] + "-" + CodeToText[value[1]] + "-" + CodeToText[value[2]]
         this.editForm.cmHometown = CodeToText[value[0]] + "-" + CodeToText[value[1]] + "-" + CodeToText[value[2]]
         //console.log(this.addForm.cmHometown)
@@ -1119,7 +1114,7 @@
         this.addForm.cmProfessionalTitles = value[0] + "-" + value[1]
         this.editForm.cmProfessionalTitles = value[0] + "-" + value[1]
         //console.log(this.addForm.cmProfessionalTitles)
-      }
+      },
     }
   }
 </script>

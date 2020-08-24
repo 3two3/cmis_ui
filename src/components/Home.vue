@@ -18,7 +18,7 @@
         </el-select>
       </div>
       <div>
-        <span>欢迎您，{{username}}</span>
+        <span>欢迎您，{{memName}}</span>
       </div>
       <div>
         <el-button type="warning" @click="logout">退出</el-button>
@@ -71,7 +71,7 @@
     data() {
       return {
         //用户名
-        username: '',
+        memName: '',
         //主题颜色
         options: [
           {
@@ -101,7 +101,7 @@
     created() {
       this.getMenuList()
       this.activePath = window.localStorage.getItem('activePath')
-      this.username = window.localStorage.getItem('username')
+      this.memName = window.localStorage.getItem('memName')
     },
     methods: {
       //更换主题
