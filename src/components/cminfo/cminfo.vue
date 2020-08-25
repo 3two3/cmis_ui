@@ -13,7 +13,7 @@
       <el-row :gutter="5">
         <el-col :span="7">
           <el-button type="danger" @click="delCminfos()">批量删除</el-button>
-          <el-button type="primary" @click="addDialogVisible = true">添加客户经理</el-button>
+          <el-button type="primary" @click="openAddDialogVisible()">添加客户经理</el-button>
         </el-col>
         <el-col :span="4">
           <el-input
@@ -92,7 +92,8 @@
     </el-card>
 
     <!--添加客户经理的对话框 -->
-    <el-dialog title="添加客户经理" :visible.sync="addDialogVisible" width="45%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加客户经理" :visible.sync="addDialogVisible" width="45%"
+               @close="addDialogClosed">
       <!--内容主体区域-->
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="姓名：" prop="cmName">
@@ -241,7 +242,8 @@
         </span>
     </el-dialog>
     <!-- 修改客户经理的对话框 -->
-    <el-dialog title="修改客户经理" :visible.sync="editDialogVisible" width="45%" @close="editDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改客户经理" :visible.sync="editDialogVisible" width="45%"
+               @close="editDialogClosed">
       <!--内容主体区域-->
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="200px">
         <el-form-item label="姓名：" prop="cmName">
@@ -972,6 +974,7 @@
       // 监听添加客户经理对话框的关闭事件
       addDialogClosed() {
         this.$refs.addFormRef.resetFields()
+        this.selectNativePlace = []
       },
       // 监听修改客户经理对话框的关闭事件
       editDialogClosed() {
@@ -1003,6 +1006,7 @@
           return this.$message.error('查询客户经理信息失败！')
         }
         var hometown = res.data.cminfo.cmHometown.split('-')
+        this.selectNativePlace = []
         this.selectNativePlace[0] = TextToCode[hometown[0]].code.toString()
         this.selectNativePlace[1] = TextToCode[hometown[0]][hometown[1]].code.toString()
         this.selectNativePlace[2] = TextToCode[hometown[0]][hometown[1]][hometown[2]].code.toString()
@@ -1115,6 +1119,11 @@
         this.editForm.cmProfessionalTitles = value[0] + "-" + value[1]
         //console.log(this.addForm.cmProfessionalTitles)
       },
+      openAddDialogVisible() {
+        this.selectNativePlace = []
+        this.technicalTitle = []
+        this.addDialogVisible = true
+      }
     }
   }
 </script>
@@ -1141,7 +1150,7 @@
   }
 
   .el-table {
-    max-height: 450px;
+    max-height: 410px;
     overflow: auto;
   }
 </style>

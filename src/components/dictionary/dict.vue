@@ -10,7 +10,7 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 搜索与添加区域 -->
-      <el-row :gutter="20">
+      <el-row :gutter="5">
         <el-col :span="10">
           <el-button type="danger" @click="delDicts()">批量删除</el-button>
           <el-button type="primary" @click="addDialogVisible = true">添加字典数据</el-button>
@@ -66,9 +66,10 @@
     </el-card>
 
     <!-- 添加字典类型的对话框 -->
-    <el-dialog title="添加字典类型" :visible.sync="addTypeDialogVisible" width="40%" @close="addTypeDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加字典类型" :visible.sync="addTypeDialogVisible" width="45%"
+               @close="addTypeDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addTypeForm" :rules="addTypeFormRules" ref="addTypeFormRef" label-width="100px">
+      <el-form :model="addTypeForm" :rules="addTypeFormRules" ref="addTypeFormRef" label-width="200px">
         <el-form-item label="类型名称：" prop="dictTypeName">
           <el-input v-model="addTypeForm.dictTypeName"></el-input>
         </el-form-item>
@@ -81,9 +82,9 @@
     </el-dialog>
 
     <!-- 删除字典类型的对话框 -->
-    <el-dialog title="删除字典类型" :visible.sync="delTypeDialogVisible" width="40%">
+    <el-dialog :close-on-click-modal="false" title="删除字典类型" :visible.sync="delTypeDialogVisible" width="45%">
       <!-- 内容主体区域 -->
-      <el-form :model="delTypeForm" :rules="delTypeFormRules" ref="delTypeFormRef" label-width="100px">
+      <el-form :model="delTypeForm" :rules="delTypeFormRules" ref="delTypeFormRef" label-width="200px">
         <el-form-item label="类型：" prop="dictTypeName">
           <el-select v-model="delTypeForm.dictTypeId" placeholder="请选择">
             <el-option
@@ -103,9 +104,10 @@
     </el-dialog>
 
     <!-- 添加字典的对话框 -->
-    <el-dialog title="添加字典" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加字典" :visible.sync="addDialogVisible" width="45%"
+               @close="addDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="标签名：" prop="dictName">
           <el-input v-model="addForm.dictName"></el-input>
         </el-form-item>
@@ -129,8 +131,9 @@
 
     <!-- 修改字典的对话框 -->
     <!-- 内容主体区域 -->
-    <el-dialog title="修改字典" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
+    <el-dialog :close-on-click-modal="false" title="修改字典" :visible.sync="editDialogVisible" width="45%"
+               @close="editDialogClosed">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="200px">
         <el-form-item label="标签名：" prop="dictName">
           <el-input v-model="editForm.dictName"></el-input>
         </el-form-item>
@@ -292,7 +295,7 @@
           const {data: res} = await this.$http.post('dict/addDictType', this.addTypeForm)
           if (res.status !== 200) {
             this.addTypeDialogVisible = false
-            return this.$message.error('添加字典类型失败！')
+            return this.$message.error(res.msg)
           }
           this.$message.success('添加字典类型成功！')
           this.addTypeDialogVisible = false
@@ -309,7 +312,7 @@
           const {data: res} = await this.$http.post('dict/addDict', this.addForm)
           if (res.status !== 200) {
             this.addDialogVisible = false
-            return this.$message.error('添加字典失败！')
+            return this.$message.error(res.msg)
           }
           this.$message.success('添加字典成功！')
           // 隐藏添加字典的对话框
@@ -337,7 +340,7 @@
           const {data: res} = await this.$http.post('dict/updateDict', this.editForm)
           if (res.status !== 200) {
             this.editDialogVisible = false
-            return this.$message.error('修改字典数据失败！')
+            return this.$message.error(res.msg)
           }
           this.$message.success('修改字典数据成功！')
           // 隐藏修改字典的对话框
@@ -436,7 +439,7 @@
           if (confirmResult !== 'confirm') {
             return this.$message.info('已取消删除')
           }
-        }else {
+        } else {
           return this.$message.info('您未选择数据')
         }
         //console.log(params)
@@ -460,12 +463,24 @@
 </script>
 
 <style lang="less" scoped>
-  .el-select .el-input {
-    width: 130px;
+  .el-form-item .el-input {
+    width: 250px;
+  }
+
+  .el-form-item .el-date-picker {
+    width: 250px;
+  }
+
+  .el-form-item .el-select {
+    width: 250px;
+  }
+
+  .el-form-item .el-cascader {
+    width: 250px;
   }
 
   .el-table {
-    max-height: 450px;
+    max-height: 410px;
     overflow: auto;
   }
 </style>

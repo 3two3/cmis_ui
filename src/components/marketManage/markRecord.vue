@@ -10,8 +10,8 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 搜索与添加区域 -->
-      <el-row :gutter="20">
-        <el-col :span="13">
+      <el-row :gutter="5">
+        <el-col :span="14">
           <el-button type="danger" @click="delMarkRecords()">批量删除</el-button>
           <el-button type="primary" @click="addDialogVisible = true">添加营销记录</el-button>
         </el-col>
@@ -95,9 +95,9 @@
     </el-card>
 
     <!-- 添加营销记录的对话框 -->
-    <el-dialog title="添加营销记录" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加营销记录" :visible.sync="addDialogVisible" width="45%" @close="addDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="150px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="客户姓名：" prop="cName">
           <el-select v-model="addForm.cName" placeholder="请选择客户">
             <el-option
@@ -164,9 +164,9 @@
     </el-dialog>
 
     <!-- 修改营销记录的对话框 -->
-    <el-dialog title="修改营销记录" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改营销记录" :visible.sync="editDialogVisible" width="45%" @close="editDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="150px">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="200px">
         <el-form-item label="客户姓名：" prop="cName">
           <el-select v-model="editForm.cName" placeholder="请选择客户">
             <el-option
@@ -551,12 +551,28 @@
 </script>
 
 <style lang="less" scoped>
-  .el-select .el-input {
-    width: 130px;
+  .el-form-item .el-input {
+    width: 250px;
+  }
+
+  .el-form-item .el-date-picker {
+    width: 250px;
+  }
+
+  .el-form-item .el-select {
+    width: 250px;
+  }
+
+  .el-form-item .el-cascader {
+    width: 250px;
+  }
+
+  .home-container {
+    height: 100%;
   }
 
   .el-table {
-    max-height: 450px;
+    max-height: 410px;
     overflow: auto;
   }
 </style>

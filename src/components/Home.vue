@@ -3,7 +3,7 @@
     <!-- 头部区域 -->
     <el-header :class="themeColor">
       <div>
-        <img src="../assets/chang.jpg" alt="" style="width: 200px">
+        <a href="/#"><img src="../assets/chang.jpg" alt="" style="width: 200px"></a>
         <span>贵州农行客户经理信息管理系统</span>
       </div>
       <!--主题颜色-->
@@ -110,13 +110,20 @@
         //console.log(themeColor)
       },
       //退出登录
-      logout() {
+      async logout() {
+        const {data: res} = await this.$http.get('member/logout')
+        if (res.status !== 200) return this.$message.error("退出失败！")
         window.localStorage.clear()
         this.$router.push('/login')
       },
       // 获取所有的菜单
       async getMenuList() {
         const {data: res} = await this.$http.get('menu/list')
+        if (res.msg == '用户未登录！') {
+          window.localStorage.clear()
+          this.$router.push('/login')
+          return this.$message.error(res.msg)
+        }
         if (res.status !== 200) return this.$message.error("获取菜单列表失败！")
         this.menuParents = res.data.menuParents
         //console.log(res)

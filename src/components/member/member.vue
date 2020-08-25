@@ -10,10 +10,10 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 搜索与添加区域 -->
-      <el-row :gutter="20">
-        <el-col :span="13">
+      <el-row :gutter="5">
+        <el-col :span="14">
           <el-button type="danger" @click="delMembers()">批量删除</el-button>
-          <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
+          <el-button type="primary" @click="openAddDialogVisible()">添加用户</el-button>
         </el-col>
         <el-col :span="4">
           <el-input
@@ -76,9 +76,10 @@
     </el-card>
 
     <!-- 添加用户的对话框 -->
-    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加用户" :visible.sync="addDialogVisible" width="45%"
+               @close="addDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="用户角色：">
           <el-switch
             active-color="#13ce66"
@@ -127,9 +128,10 @@
 
     <!-- 修改用户的对话框 -->
     <!-- 内容主体区域 -->
-    <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改用户" :visible.sync="editDialogVisible" width="45%"
+               @close="editDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="200px">
         <el-form-item label="用户角色：">
           <el-switch
             active-color="#13ce66"
@@ -307,6 +309,8 @@
       },
       // 监听添加用户对话框的关闭事件
       addDialogClosed() {
+        this.addForm.roleId = false
+        this.cminfoId = ''
         this.$refs.addFormRef.resetFields()
       },
       // 监听修改用户对话框的关闭事件
@@ -443,18 +447,41 @@
         this.addForm.memName = cminfo.cmName
         this.addForm.memSex = cminfo.cmSex
         this.addForm.memBorn = cminfo.cmBirthday
+      },
+      openAddDialogVisible() {
+        if (this.cminfos.length > 0) {
+          this.addDialogVisible = true
+        } else {
+          return this.$message.error('当前经理都已成为用户，无可新增用户！')
+        }
       }
     }
   }
 </script>
 
 <style lang="less" scoped>
-  .el-select .el-input {
-    width: 130px;
+  .el-form-item .el-input {
+    width: 250px;
+  }
+
+  .el-form-item .el-date-picker {
+    width: 250px;
+  }
+
+  .el-form-item .el-select {
+    width: 250px;
+  }
+
+  .el-form-item .el-cascader {
+    width: 250px;
+  }
+
+  .home-container {
+    height: 100%;
   }
 
   .el-table {
-    max-height: 450px;
+    max-height: 410px;
     overflow: auto;
   }
 </style>

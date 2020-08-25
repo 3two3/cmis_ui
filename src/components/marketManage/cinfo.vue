@@ -11,8 +11,8 @@
     <el-card>
       <!-- 搜索与添加区域 -->
       <el-row :gutter="5">
-        <el-col :span="7">
-          <el-button type="danger" @click="delCinfos()">批量删除</el-button>
+        <el-col :span="10">
+          <el-button :style="{ display:this.role }" type="danger" @click="delCinfos()">批量删除</el-button>
           <el-button type="primary" @click="addDialogVisible = true">添加客户信息</el-button>
         </el-col>
         <el-col :span="4">
@@ -58,7 +58,7 @@
         <el-table-column label="资产(万元)" prop="cBalance" width="100px"></el-table-column>
         <el-table-column label="负债(万元)" prop="cDebt" width="100px"></el-table-column>
         <el-table-column label="业务关联" prop="cBusiness" width="100px"></el-table-column>
-        <el-table-column label="客户经理编号" prop="cCmId" width="110px"></el-table-column>
+        <el-table-column label="客户经理" prop="cRemarks" width="110px"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
@@ -79,7 +79,8 @@
     </el-card>
 
     <!--添加客户信息的对话框 -->
-    <el-dialog title="添加客户信息" :visible.sync="addDialogVisible" width="45%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加客户信息" :visible.sync="addDialogVisible" width="45%"
+               @close="addDialogClosed">
       <!--内容主体区域-->
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="客户姓名：" prop="cName">
@@ -118,7 +119,8 @@
     </el-dialog>
 
     <!--修改客户信息的对话框 -->
-    <el-dialog title="修改客户信息" :visible.sync="editDialogVisible" width="45%" @close="editDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改客户信息" :visible.sync="editDialogVisible" width="45%"
+               @close="editDialogClosed">
       <!--内容主体区域-->
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="200px">
         <el-form-item label="客户姓名：" prop="cName">
@@ -184,6 +186,8 @@
         cb(new Error('手机号格式不正确！'))
       }
       return {
+        //用户权限
+        role: '',
         queryInfo: {
           //经理编号查询字段
           cCmId: '',
@@ -333,6 +337,7 @@
       }
     },
     created() {
+      this.role = window.localStorage.getItem('role').trim() === '0'.trim() ? '' : 'none'
       this.getCinfoList()
     },
     methods: {
@@ -392,6 +397,9 @@
       //监听修改客户信息的对话框事件
       async showEditDialog(id) {
         const {data: res} = await this.$http.get('cinfo/get/' + id)
+        if (res.msg == "无法操作其他用户的客户信息！") {
+          return this.$message.error(res.msg)
+        }
         if (res.status !== 200) {
           return this.$message.error('查询客户信息信息失败！')
         }
@@ -417,6 +425,10 @@
       },
       //点击按钮，删除单个客户信息
       async deleteCinfoById(id) {
+        const {data: result} = await this.$http.delete('cinfo/delCinfo/' + id)
+        if (result.msg == "无法操作其他用户的客户信息！") {
+          return this.$message.error(result.msg)
+        }
         // 弹框询问用户是否删除数据
         const confirmResult = await this.$confirm(
           '此操作将永久删除该客户信息, 是否继续?',
@@ -434,7 +446,6 @@
         if (confirmResult !== 'confirm') {
           return this.$message.info('已取消删除')
         }
-        const {data: result} = await this.$http.delete('cinfo/delCinfo/' + id)
         if (result.status !== 200) {
           return this.$message.error('删除客户信息失败！')
         }
@@ -488,13 +499,24 @@
     width: 250px;
   }
 
+  .el-form-item .el-date-picker {
+    width: 250px;
+  }
+
+  .el-form-item .el-select {
+    width: 250px;
+  }
+
+  .el-form-item .el-cascader {
+    width: 250px;
+  }
+
   .home-container {
     height: 100%;
   }
 
   .el-table {
-    font-size: 12px;
-    max-height: 450px;
+    max-height: 410px;
     overflow: auto;
   }
 </style>

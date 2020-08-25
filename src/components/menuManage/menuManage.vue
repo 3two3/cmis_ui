@@ -9,7 +9,7 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 搜索与添加区域 -->
-      <el-row :gutter="20">
+      <el-row :gutter="5">
         <el-col :span="3">
           <el-button type="primary" @click="addParentDialogVisible = true">添加父菜单</el-button>
         </el-col>
@@ -42,9 +42,10 @@
     </el-card>
 
     <!-- 添加父菜单的对话框 -->
-    <el-dialog title="添加父菜单" :visible.sync="addParentDialogVisible" width="40%" @close="addParentDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加父菜单" :visible.sync="addParentDialogVisible" width="45%"
+               @close="addParentDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="名称：" prop="menuName">
           <el-input v-model="addForm.menuName"></el-input>
         </el-form-item>
@@ -67,9 +68,10 @@
     </el-dialog>
 
     <!-- 添加菜单的对话框 -->
-    <el-dialog title="添加菜单" :visible.sync="addDialogVisible" width="40%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加菜单" :visible.sync="addDialogVisible" width="45%"
+               @close="addDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="100px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="名称：" prop="menuName">
           <el-input v-model="addForm.menuName"></el-input>
         </el-form-item>
@@ -105,7 +107,8 @@
     </el-dialog>
 
     <!-- 修改父菜单的对话框 -->
-    <el-dialog title="修改父菜单" :visible.sync="editParentDialogVisible" width="40%" @close="editParentDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改父菜单" :visible.sync="editParentDialogVisible" width="40%"
+               @close="editParentDialogClosed">
       <!-- 内容主体区域 -->
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="名称：" prop="menuName">
@@ -130,7 +133,8 @@
     </el-dialog>
 
     <!-- 修改菜单的对话框 -->
-    <el-dialog title="修改菜单" :visible.sync="editDialogVisible" width="40%" @close="editDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改菜单" :visible.sync="editDialogVisible" width="40%"
+               @close="editDialogClosed">
       <!-- 内容主体区域 -->
       <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="名称：" prop="menuName">
@@ -200,9 +204,13 @@
           menuName: [
             {required: true, message: '请输入菜单名称', trigger: 'blur'},
           ],
+          parentName: [
+            {required: true, message: '请选择父菜单', trigger: ['blur', 'change']},
+          ],
           menuUrl: [
             {required: true, message: '请输入菜单地址', trigger: 'blur'},
           ],
+
           menuIcon: [
             {required: true, message: '请输入菜单图标', trigger: 'blur'},
           ]
@@ -220,6 +228,9 @@
         editFormRules: {
           menuName: [
             {required: true, message: '请输入菜单名称', trigger: 'blur'},
+          ],
+          parentName: [
+            {required: true, message: '请选择父菜单', trigger: ['blur', 'change']},
           ],
           menuUrl: [
             {required: true, message: '请输入菜单地址', trigger: 'blur'},
@@ -428,4 +439,28 @@
 </script>
 
 <style lang="less" scoped>
+  .el-form-item .el-input {
+    width: 250px;
+  }
+
+  .el-form-item .el-date-picker {
+    width: 250px;
+  }
+
+  .el-form-item .el-select {
+    width: 250px;
+  }
+
+  .el-form-item .el-cascader {
+    width: 250px;
+  }
+
+  .home-container {
+    height: 100%;
+  }
+
+  .el-table {
+    max-height: 410px;
+    overflow: auto;
+  }
 </style>

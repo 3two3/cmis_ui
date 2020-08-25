@@ -9,8 +9,8 @@
     <!-- 卡片视图区域 -->
     <el-card>
       <!-- 搜索与添加区域 -->
-      <el-row :gutter="20">
-        <el-col :span="13">
+      <el-row :gutter="5">
+        <el-col :span="14">
           <el-button type="danger" @click="delCminfoWorks()">批量删除</el-button>
           <el-button type="primary" @click="addDialogVisible = true">添加工作记录</el-button>
         </el-col>
@@ -24,7 +24,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-date-picker style="width: 160px;" clearable type="date" placeholder="选择日期"
+          <el-date-picker style="width: 180px;" clearable type="date" placeholder="选择日期"
                           v-model="queryInfo.cmDate"
                           format="yyyy-MM-dd" value-format="yyyy-MM-dd" @clear="getCminfoWorkList"
                           @change="getCminfoWorkList"></el-date-picker>
@@ -66,9 +66,10 @@
     </el-card>
 
     <!-- 添加工作记录的对话框 -->
-    <el-dialog title="添加工作记录" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="添加工作记录" :visible.sync="addDialogVisible" width="45%"
+               @close="addDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="150px">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="客户维护：" prop="cmManagement">
           <el-input type="textarea" v-model="addForm.cmManagement" placeholder="请输入客户维护"></el-input>
         </el-form-item>
@@ -95,9 +96,10 @@
       </span>
     </el-dialog>
     <!-- 修改工作记录的对话框 -->
-    <el-dialog title="修改工作记录" :visible.sync="editDialogVisible" width="50%" @close="editDialogClosed">
+    <el-dialog :close-on-click-modal="false" title="修改工作记录" :visible.sync="editDialogVisible" width="45%"
+               @close="editDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="150px">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="200px">
         <el-form-item label="客户维护：" prop="cmManagement">
           <el-input type="textarea" v-model="editForm.cmManagement" placeholder="请输入客户维护"></el-input>
         </el-form-item>
@@ -390,12 +392,28 @@
 </script>
 
 <style lang="less" scoped>
-  .el-select .el-input {
-    width: 130px;
+  .el-form-item .el-input {
+    width: 250px;
+  }
+
+  .el-form-item .el-date-picker {
+    width: 250px;
+  }
+
+  .el-form-item .el-select {
+    width: 250px;
+  }
+
+  .el-form-item .el-cascader {
+    width: 250px;
+  }
+
+  .home-container {
+    height: 100%;
   }
 
   .el-table {
-    max-height: 450px;
+    max-height: 410px;
     overflow: auto;
   }
 </style>

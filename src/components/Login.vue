@@ -6,14 +6,14 @@
         <img src="../assets/zgnyyy.jpg" alt="">
       </div>
       <!-- 登录表单区域 -->
-      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="login_form">
         <!-- 用户名 -->
         <el-form-item prop="memName">
-          <el-input v-model="loginForm.memName" prefix-icon="iconfont icon-user"></el-input>
+          <el-input v-model="loginForm.memName" prefix-icon="iconfont icon-user" placeholder="admin"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="memPass">
-          <el-input v-model="loginForm.memPass" prefix-icon="iconfont icon-3702mima" type="memPass"></el-input>
+          <el-input v-model="loginForm.memPass" prefix-icon="iconfont icon-3702mima" placeholder="123456"></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -32,8 +32,8 @@
         memName:'',
         // 这是登录表单的数据绑定对象
         loginForm: {
-          memName: 'admin',
-          memPass: '123456'
+          memName: '',
+          memPass: ''
         },
         // 这是表单的验证规则对象
         loginFormRules: {
@@ -68,6 +68,7 @@
           //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 localStorage 中
           window.localStorage.setItem('token', res.data.token)
           window.localStorage.setItem('memName', res.data.member.memName)
+          window.localStorage.setItem('role', res.data.member.roleId)
           // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
           this.$router.push('/home')
         })
