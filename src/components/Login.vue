@@ -29,7 +29,7 @@
   export default {
     data() {
       return {
-        memName:'',
+        memName: '',
         // 这是登录表单的数据绑定对象
         loginForm: {
           memName: '',
@@ -66,9 +66,10 @@
           // 1. 将登录成功之后的 token，保存到客户端的 localStorage 中
           //   1.1 项目中除了登录之外的其他API接口，必须在登录之后才能访问
           //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 localStorage 中
-          window.localStorage.setItem('token', res.data.token)
-          window.localStorage.setItem('memName', res.data.member.memName)
-          window.localStorage.setItem('role', res.data.member.roleId)
+          await window.localStorage.setItem('token', res.data.token)
+          await window.localStorage.setItem('memName', res.data.member.memName)
+          await window.localStorage.setItem('role', res.data.member.roleId)
+          await window.localStorage.setItem('activeName', 'cmResults')
           // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
           this.$router.push('/home')
         })

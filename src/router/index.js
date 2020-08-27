@@ -6,6 +6,7 @@ import Welcome from '../components/Welcome.vue'
 import MenuManage from '../components/menuManage/menuManage.vue'
 import Dict from '../components/dictionary/dict.vue'
 import Cminfo from '../components/cminfo/cminfo.vue'
+import CmSideInfo from '../components/cminfo/cmSideInfo.vue'
 import MarkRecord from '../components/marketManage/markRecord.vue'
 import Member from '../components/member/member.vue'
 import Cinfo from '../components/marketManage/cinfo.vue'
@@ -37,6 +38,7 @@ const router = new Router({
         {path: '/report', component: Report},
         {path: '/learnGarden', component: LearnGarden},
         {path: '/workManagement', component: WorkManagement},
+        {path: '/cmSideInfo', component: CmSideInfo},
       ]
     }
   ]
@@ -48,7 +50,6 @@ router.beforeEach((to, from, next) => {
   // from 代表从哪个路径跳转而来
   // next 是一个函数，表示放行
   //     next()  放行    next('/login')  强制跳转
-
   // 获取token
   const tokenStr = window.localStorage.getItem('token')
   if (to.path === '/login') {

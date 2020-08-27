@@ -170,6 +170,14 @@
         const regIdCard = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
         if (regIdCard.test(value)) {
           //await this.autoGene(value.length);
+          const result = await this.checkIdCardIsOnly(value)
+          if (!result) {
+            cb(new Error('已有此身份证的客户存在，请修改！'))
+          }
+          const res = await this.checkIdCardIsOnlyWithCminfo(value)
+          if (!res) {
+            cb(new Error('此身份证与客户经理信息重复，请修改！'))
+          }
           // 合法的身份证号
           return cb()
         }
@@ -391,7 +399,7 @@
           this.addDialogVisible = false
           // 重新获取客户信息列表数据
           this.getCinfoList()
-          this.reload()
+          //this.reload()
         })
       },
       //监听修改客户信息的对话框事件
@@ -420,7 +428,7 @@
           this.editDialogVisible = false
           // 重新获取客户信息列表数据
           this.getCinfoList()
-          this.reload()
+          //this.reload()
         })
       },
       //点击按钮，删除单个客户信息
@@ -451,7 +459,7 @@
         }
         this.$message.success('删除客户信息成功！')
         this.getCinfoList()
-        this.reload()
+        //this.reload()
       },
       //绑定多选值
       handleSelectionChange(val) {
@@ -459,28 +467,33 @@
       },
       //批量删除客户信息
       async delCinfos() {
-        // 弹框询问用户是否删除数据
-        const confirmResult = await this.$confirm(
-          '此操作将永久删除客户信息数据, 是否继续?',
-          '提示',
-          {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }
-        ).catch(err => err)
-
-        // 如果用户确认删除，则返回值为字符串 confirm
-        // 如果用户取消了删除，则返回值为字符串 cancel
-        // console.log(confirmResult)
-        if (confirmResult !== 'confirm') {
-          return this.$message.info('已取消删除')
-        }
         let checkArr = this.multipleSelection;   // multipleSelection存储了勾选到的数据
         let params = [];
         checkArr.forEach(function (item) {
           params.push(item.cKey);       // 添加所有需要删除数据的id到一个数组，post提交过去
         });
+        if (params.length > 0) {
+          // 弹框询问用户是否删除数据
+          const confirmResult = await this.$confirm(
+            '此操作将永久删除客户信息数据, 是否继续?',
+            '提示',
+            {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }
+          ).catch(err => err)
+
+          // 如果用户确认删除，则返回值为字符串 confirm
+          // 如果用户取消了删除，则返回值为字符串 cancel
+          // console.log(confirmResult)
+          if (confirmResult !== 'confirm') {
+            return this.$message.info('已取消删除')
+          }
+        } else {
+          return this.$message.info('您未选择数据')
+        }
+
         //console.log(params)
         const {data: result} = await this.$http.delete('cinfo/delCinfos/' + params)
         if (result.status !== 200) {
@@ -488,8 +501,26 @@
         }
         this.$message.success('删除客户信息成功！')
         this.getCinfoList()
-        this.reload()
+        //this.reload()
       },
+      async checkIdCardIsOnly(idCard) {
+        const formData = new FormData()
+        formData.append('idCard', idCard)
+        const {data: res} = await this.$http.post('cinfo/checkIdCardIsOnly', formData)
+        if (res.status !== 200) {
+          return false
+        }
+        return true
+      },
+      async checkIdCardIsOnlyWithCminfo(idCard) {
+        const formData = new FormData()
+        formData.append('idCard', idCard)
+        const {data: res} = await this.$http.post('cminfo/checkIdCardIsOnly', formData)
+        if (res.status !== 200) {
+          return false
+        }
+        return true
+      }
     }
   }
 </script>

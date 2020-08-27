@@ -298,7 +298,7 @@
           this.addDialogVisible = false
           // 重新获取学习资料列表数据
           this.getCLearnList()
-          this.reload()
+          //this.reload()
         })
       },
       //监听修改学习资料的对话框事件
@@ -326,7 +326,7 @@
           this.editDialogVisible = false
           // 重新获取学习资料列表数据
           this.getCLearnList()
-          this.reload()
+          //this.reload()
         })
       },
       //点击按钮，删除单个学习资料
@@ -354,7 +354,7 @@
         }
         this.$message.success('删除学习资料成功！')
         this.getCLearnList()
-        this.reload()
+        //this.reload()
       },
       //绑定多选值
       handleSelectionChange(val) {
@@ -395,19 +395,31 @@
         }
         this.$message.success('删除学习资料数据成功！')
         this.getCLearnList()
-        this.reload()
+        //this.reload()
       },
       async getlUrlFile(item) {
-        //console.log(item.file)
-        await this.upload(item.file).then(res1 => {
-            if (res1.data.status !== 200) {
-              this.addDialogVisible = false
-              return this.$message.error('上传文件失败！')
+        if (this.addDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file).then(res => {
+              if (res.data.status !== 200) {
+                this.addDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.addForm.lUrl = res.data.data.filename
             }
-            this.addForm.lUrl = res1.data.data.filename
-            this.editForm.lUrl = res1.data.data.filename
-          }
-        );
+          );
+        }
+        if (this.editDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file).then(res => {
+              if (res.data.status !== 200) {
+                this.editDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.editForm.lUrl = res.data.data.filename
+            }
+          );
+        }
       },
       async upload(file) {
         const formData = new FormData()

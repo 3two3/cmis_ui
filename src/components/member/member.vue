@@ -335,7 +335,7 @@
           this.addDialogVisible = false
           // 重新获取用户列表数据
           this.getMemberList()
-          this.reload()
+          //this.reload()
         })
       },
       //监听修改用户的对话框事件
@@ -366,7 +366,7 @@
           this.editDialogVisible = false
           // 重新获取用户列表数据
           this.getMemberList()
-          this.reload()
+          //this.reload()
         })
       },
       //点击按钮，删除单个用户
@@ -394,7 +394,7 @@
         }
         this.$message.success('删除用户成功！')
         this.getMemberList()
-        this.reload()
+        //this.reload()
       },
       //绑定多选值
       handleSelectionChange(val) {
@@ -435,7 +435,7 @@
         }
         this.$message.success('删除用户数据成功！')
         this.getMemberList()
-        this.reload()
+        //this.reload()
       },
       async isSelect() {
         const {data: res} = await this.$http.get('cminfo/get/' + this.cminfoId)

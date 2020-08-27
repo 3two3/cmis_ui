@@ -389,7 +389,7 @@
           this.addDialogVisible = false
           // 重新获取营销记录列表数据
           this.getMarkRecordList()
-          this.reload()
+          //this.reload()
         })
       },
       //监听修改营销记录的对话框事件
@@ -417,7 +417,7 @@
           this.editDialogVisible = false
           // 重新获取营销记录列表数据
           this.getMarkRecordList()
-          this.reload()
+          //this.reload()
         })
       },
       //点击按钮，删除单个营销记录
@@ -445,7 +445,7 @@
         }
         this.$message.success('删除营销记录成功！')
         this.getMarkRecordList()
-        this.reload()
+        //this.reload()
       },
       //绑定多选值
       handleSelectionChange(val) {
@@ -486,43 +486,79 @@
         }
         this.$message.success('删除营销记录数据成功！')
         this.getMarkRecordList()
-        this.reload()
+        //this.reload()
       },
       async getCReportFile(item) {
-        //console.log(item.file)
-        await this.upload(item.file, this.addForm.cId).then(res1 => {
-            if (res1.data.status !== 200) {
-              this.addDialogVisible = false
-              return this.$message.error('上传文件失败！')
+        if (this.addDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file, this.addForm.cId).then(res1 => {
+              if (res1.data.status !== 200) {
+                this.addDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.addForm.cReport = res1.data.data.filename
             }
-            this.addForm.cReport = res1.data.data.filename
-            this.editForm.cReport = res1.data.data.filename
-          }
-        );
+          );
+        }
+        if (this.editDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file, this.addForm.cId).then(res1 => {
+              if (res1.data.status !== 200) {
+                this.editDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.editForm.cReport = res1.data.data.filename
+            }
+          );
+        }
       },
       async getCTestimonialsFile(item) {
-        //console.log(item.file)
-        await this.upload(item.file, this.addForm.cId).then(res2 => {
-            if (res2.data.status !== 200) {
-              this.addDialogVisible = false
-              return this.$message.error('上传文件失败！')
+        if (this.addDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file, this.addForm.cId).then(res2 => {
+              if (res2.data.status !== 200) {
+                this.addDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.addForm.cTestimonials = res2.data.data.filename
             }
-            this.addForm.cTestimonials = res2.data.data.filename
-            this.editForm.cTestimonials = res2.data.data.filename
-          }
-        );
+          );
+        }
+        if (this.editDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file, this.addForm.cId).then(res2 => {
+              if (res2.data.status !== 200) {
+                this.editDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.editForm.cTestimonials = res2.data.data.filename
+            }
+          );
+        }
       },
       async getCEvaluationFile(item) {
-        //console.log(item.file)
-        await this.upload(item.file, this.addForm.cId).then(res3 => {
-            if (res3.data.status !== 200) {
-              this.addDialogVisible = false
-              return this.$message.error('上传文件失败！')
+        if (this.addDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file, this.addForm.cId).then(res3 => {
+              if (res3.data.status !== 200) {
+                this.addDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.addForm.cEvaluation = res3.data.data.filename
             }
-            this.addForm.cEvaluation = res3.data.data.filename
-            this.editForm.cEvaluation = res3.data.data.filename
-          }
-        );
+          );
+        }
+        if (this.editDialogVisible) {
+          //console.log(item.file)
+          await this.upload(item.file, this.addForm.cId).then(res3 => {
+              if (res3.data.status !== 200) {
+                this.editDialogVisible = false
+                return this.$message.error('上传文件失败！')
+              }
+              this.editForm.cEvaluation = res3.data.data.filename
+            }
+          );
+        }
       },
       async upload(file, cid) {
         const formData = new FormData()

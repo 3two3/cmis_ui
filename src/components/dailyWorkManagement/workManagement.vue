@@ -288,7 +288,7 @@
           this.addDialogVisible = false
           // 重新获取工作记录列表数据
           this.getCminfoWorkList()
-          this.reload()
+          //this.reload()
         })
       },
       //监听修改工作记录的对话框事件
@@ -316,7 +316,7 @@
           this.editDialogVisible = false
           // 重新获取工作记录列表数据
           this.getCminfoWorkList()
-          this.reload()
+          //this.reload()
         })
       },
       //点击按钮，删除单个工作记录
@@ -344,7 +344,7 @@
         }
         this.$message.success('删除工作记录成功！')
         this.getCminfoWorkList()
-        this.reload()
+        //this.reload()
       },
       //绑定多选值
       handleSelectionChange(val) {
@@ -385,7 +385,7 @@
         }
         this.$message.success('删除工作记录数据成功！')
         this.getCminfoWorkList()
-        this.reload()
+        //this.reload()
       },
     }
   }

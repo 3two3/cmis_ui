@@ -300,7 +300,7 @@
           this.$message.success('添加字典类型成功！')
           this.addTypeDialogVisible = false
           this.getdictList()
-          this.reload()
+          //this.reload()
         })
       },
       // 点击按钮，添加新字典
@@ -319,7 +319,7 @@
           this.addDialogVisible = false
           // 重新获取字典列表数据
           this.getdictList()
-          this.reload()
+          //this.reload()
         })
       },
       //监听修改字典的对话框事件
@@ -347,7 +347,7 @@
           this.editDialogVisible = false
           // 重新获取字典列表数据
           this.getdictList()
-          this.reload()
+          //this.reload()
         })
       },
       //点击按钮，删除单个字典类型
@@ -381,7 +381,7 @@
         this.delTypeDialogVisible = false
         this.$message.success('删除字典类型成功！')
         this.getdictList()
-        this.reload()
+        //this.reload()
       },
       //点击按钮，删除单个字典
       async deletedictById(id) {
@@ -408,7 +408,7 @@
         }
         this.$message.success('删除字典成功！')
         this.getdictList()
-        this.reload()
+        //this.reload()
       },
       //绑定多选值
       handleSelectionChange(val) {
@@ -449,7 +449,7 @@
         }
         this.$message.success('删除字典数据成功！')
         this.getdictList()
-        this.reload()
+        //this.reload()
       },
       //绑定字典类型
       bindDictTypeName(dictTypeName) {

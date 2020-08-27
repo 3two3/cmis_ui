@@ -45,19 +45,19 @@
     <el-dialog :close-on-click-modal="false" title="添加父菜单" :visible.sync="addParentDialogVisible" width="45%"
                @close="addParentDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="200px">
+      <el-form :model="addParentForm" :rules="addParentFormRules" ref="addFormRef" label-width="200px">
         <el-form-item label="名称：" prop="menuName">
-          <el-input v-model="addForm.menuName"></el-input>
+          <el-input v-model="addParentForm.menuName"></el-input>
         </el-form-item>
         <el-form-item label="经理权限" prop="isShow">
           <el-switch
-            v-model="addForm.isShow"
+            v-model="addParentForm.isShow"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
         </el-form-item>
         <el-form-item label="图标：" prop="menuIcon">
-          <el-input v-model="addForm.menuIcon"></el-input>
+          <el-input v-model="addParentForm.menuIcon"></el-input>
         </el-form-item>
       </el-form>
       <!-- 底部区域 -->
@@ -110,19 +110,19 @@
     <el-dialog :close-on-click-modal="false" title="修改父菜单" :visible.sync="editParentDialogVisible" width="40%"
                @close="editParentDialogClosed">
       <!-- 内容主体区域 -->
-      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="100px">
+      <el-form :model="editParentForm" :rules="editParentFormRules" ref="editFormRef" label-width="100px">
         <el-form-item label="名称：" prop="menuName">
-          <el-input v-model="editForm.menuName"></el-input>
+          <el-input v-model="editParentForm.menuName"></el-input>
         </el-form-item>
         <el-form-item label="经理权限" prop="isShow">
           <el-switch
-            v-model="editForm.isShow"
+            v-model="editParentForm.isShow"
             active-color="#13ce66"
             inactive-color="#ff4949">
           </el-switch>
         </el-form-item>
         <el-form-item label="图标：" prop="menuIcon">
-          <el-input v-model="editForm.menuIcon"></el-input>
+          <el-input v-model="editParentForm.menuIcon"></el-input>
         </el-form-item>
       </el-form>
       <!-- 底部区域 -->
@@ -190,6 +190,34 @@
         addDialogVisible: false,
         // 控制修改菜单对话框的显示与隐藏
         editDialogVisible: false,
+        addParentForm: {
+          menuName: '',
+          isShow: 'true',
+          menuIcon: ''
+        },
+        // 添加表单的验证规则对象
+        addParentFormRules: {
+          menuName: [
+            {required: true, message: '请输入菜单名称', trigger: 'blur'},
+          ],
+          menuIcon: [
+            {required: true, message: '请输入菜单图标', trigger: 'blur'},
+          ]
+        },
+        editParentForm: {
+          menuName: '',
+          isShow: 'true',
+          menuIcon: ''
+        },
+        // 添加表单的验证规则对象
+        editParentFormRules: {
+          menuName: [
+            {required: true, message: '请输入菜单名称', trigger: 'blur'},
+          ],
+          menuIcon: [
+            {required: true, message: '请输入菜单图标', trigger: 'blur'},
+          ]
+        },
         // 添加菜单的表单数据
         addForm: {
           menuName: '',
@@ -282,8 +310,8 @@
           if (!valid) return
           // 可以发起添加菜单的网络请求
           //console.log(this.addForm.isShow)
-          this.addForm.isShow = this.addForm.isShow === true ? 1 : 0
-          const {data: res} = await this.$http.post('menu/addParentMenu', this.addForm)
+          this.addParentForm.isShow = this.addParentForm.isShow === true ? 1 : 0
+          const {data: res} = await this.$http.post('menu/addParentMenu', this.addParentForm)
           if (res.status !== 200) {
             // 隐藏添加菜单的对话框
             this.addParentDialogVisible = false
@@ -327,8 +355,8 @@
         if (res.status !== 200) {
           return this.$message.error('查询父菜单信息失败！')
         }
-        this.editForm = res.data.menuParent
-        this.editForm.isShow = this.editForm.isShow == 1 ? true : false
+        this.editParentForm = res.data.menuParent
+        this.editParentForm.isShow = this.editParentForm.isShow == 1 ? true : false
         this.editParentDialogVisible = true;
       },
       // 点击按钮，修改父级菜单
@@ -336,8 +364,8 @@
         this.$refs.editFormRef.validate(async valid => {
           if (!valid) return
           // 可以发起添加菜单的网络请求
-          this.editForm.isShow = this.editForm.isShow == true ? 1 : 0
-          const {data: res} = await this.$http.post('menu/updateMenuParent', this.editForm)
+          this.editParentForm.isShow = this.editParentForm.isShow == true ? 1 : 0
+          const {data: res} = await this.$http.post('menu/updateMenuParent', this.editParentForm)
           if (res.status !== 200) {
             return this.$message.error('修改父级菜单失败！')
           }
